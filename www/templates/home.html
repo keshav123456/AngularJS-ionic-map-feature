@@ -1,0 +1,24 @@
+
+<ion-view ng-controller="HomeCtrl">
+
+<div id='map'></div>
+
+<div id='overlay'>
+<label class="item-input-wrapper">
+<i class="ion-ios-rainy-outline"></i>
+<label ng-model="rain"><h5>{{rain}}</h5></label>
+<i class="ion-ios-cloud"></i>
+<label ng-model="humidity"><h5>Humidity: {{humidity}}%</h5></label>
+<i class="ion-thermometer"></i>
+<label ng-model="temp"><h5>Temp: {{temp}}</h5></label>
+
+</label>
+</div>
+<div id='geocoder-container'> 
+</div>
+<button class="button button round button-assertive" ng-click="addpopup()"> <i class="ion-plus-round"></i> </button>
+
+
+
+
+</ion-view>

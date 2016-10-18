@@ -1,0 +1,105 @@
+/* Empty. Add your own CSS if you like */
+body {
+ margin:0; padding:0;
+}
+
+.popup-buttons {
+     margin-left:0px;
+}
+.item-input-wrapper {
+	border-color: rgba(0, 0, 0, 0);
+	background-color: rgba(0, 0, 0, 0);
+	color: white; 
+
+}
+
+.color{
+	   font-color: #000000;
+	   color: #000000;
+}
+
+.button.button.round {
+  margin-top: 150%;
+  margin-left: 80%;
+}
+
+
+i.ion-ios-rainy-outline {
+	font-size: 38px;
+	margin-left: 7px;
+	margin-right: 7px;
+}
+
+i.ion-ios-cloud {
+	font-size: 38px;
+	margin-left: 7px;
+	margin-right: 7px;
+}
+
+i.ion-thermometer {
+	font-size: 31px;
+	margin-left: 7px;
+	margin-right: 7px;
+}
+
+#map { 
+	position:absolute; top:0; bottom:0; width:100%; 
+	margin-top: 50px;
+}
+
+#geocoder-container > div {
+    min-width:50%;
+    margin-left:25%;
+}
+
+#menu {
+    position: absolute;
+    background: #fff;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#water {
+  polygon-fill: #000000;
+  polygon-opacity: 0.95;
+}
+
+
+
+#geocoder-container {
+    position: absolute;
+    top: 0;
+    width: 90%;
+    margin-top: 60px;
+}
+
+#geocoder-container > div {
+    min-width:100%;
+    margin-left:4%;
+    margin-right: 4%;
+}
+
+#overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 30px;
+	margin-top: 20px;
+	width: 100px;
+	height: 100px;
+	z-index: 10;
+	background-color: rgba(52,176,176,0.55);
+
+}
+
+@media only screen and (max-width: 480px) {
+	#overlay {
+      margin-top: 0;
+      margin-right: 0;
+      width: 100%;
+      height: 50px;
+      z-index: 10;
+      background-color: rgba(52,176,176,0.55);
+
+	}
+}
