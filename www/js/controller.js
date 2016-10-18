@@ -2,25 +2,17 @@
        
 
 
-podmap.controller('HomeCtrl', function($http, $scope, $ionicPopup, $rootScope, $localStorage, $sessionStorage){
+podmap.controller('HomeCtrl', function($http, $scope, $ionicPopup, $firebase, Items){
 
   var lat;
+  $scope.items = Items;
   var lng;
   var loc;
   var geometry;
   var placename;
    $scope.data = {};
    $scope.event = {};
-  var geojsonpoint =   {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": []
-            },
-            "properties": {
-              "description": "h"
-            }
-          };
+  var geojsonpoint =   {};
 
   var eventsource = {
     "type": "FeatureCollection",
@@ -49,11 +41,15 @@ podmap.controller('HomeCtrl', function($http, $scope, $ionicPopup, $rootScope, $
           if (!$scope.event.description) {
           console.log(""+$scope.event.location);
           console.log(""+$scope.event.description);
+          console.log(""+$scope.event.time);
+
 
             //don't allow the user to close unless he enters a description
           } else {
           console.log(""+$scope.event.location);
           console.log(""+$scope.event.description);
+          console.log(""+$scope.event.time);
+
           
           // each geojson is composed of three elements 
           // these are type, which is always feature
@@ -61,26 +57,52 @@ podmap.controller('HomeCtrl', function($http, $scope, $ionicPopup, $rootScope, $
           // then comes the properties, under which description needs to be created
           // the whole array needs to be created outside of the function set data - set data is final.
           // wait why dont we take it from the already existing file? just put var array = one of the files. 
+          
+          //the setting up firebase pushing data
+          var database = firebase.database();
+        
+          var ref = firebase.database().ref("eventstorage");
 
+      
+                
+          var number = eventsource.features.length;
 
-          console.log(""+JSON.stringify($localStorage.eventstorage));
+          geojsonpoint.number = {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": []
+            },
+            "properties": {
+              "description": "h",
+              "time":"x"
+            }
+          };
 
-          geojsonpoint.geometry = geometry;
+          console.log(""+JSON.stringify(eventsource));
 
-          geojsonpoint.properties.description = $scope.event.description;
+          geojsonpoint.number.geometry = geometry;
 
-          console.log(""+JSON.stringify($localStorage.eventstorage));
+          geojsonpoint.number.properties.description = $scope.event.description;
 
-          eventsource.features.push(geojsonpoint);
+          geojsonpoint.number.properties.time = $scope.event.time;
 
-          console.log(""+eventsource.features.length)
+          eventsource.features.push(geojsonpoint.number);
 
           map.getSource('events').setData(eventsource);
 
-          
+          console.log(""+JSON.stringify(eventsource));
+
+// firebase if required 
+            firebase.database().ref("eventstorage").set({
+         data: eventsource,
+           });
+
+
           //to remove the single point once the data has been stored in an alternative file 
           map.getSource('single-point').setData({"type":"Point","coordinates":[,]});
 
+        
             //get this object of description and add it to an array upon add data
         //set the source of data to the whole array
         //also take the object of geometry and add it before the data
@@ -356,7 +378,7 @@ map.addLayer({
       // based on the feature found.
 
          var popup = new mapboxgl.Popup()
-          .setLngLat($rootScope.geometry.coordinates)
+          .setLngLat(geometry.coordinates)
           .setHTML("Want to add an event?")
           .addTo(map); 
 
@@ -373,8 +395,8 @@ map.addLayer({
 	    // based on the feature found.
 
          var popup = new mapboxgl.Popup()
-          .setLngLat(eventsource.features[0].geometry.coordinates)
-          .setHTML(""+eventsource.features[0].properties.description)
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML("<strong> Event: </strong>"+feature.properties.description+"<strong> Date: </strong>"+feature.properties.time)
           .addTo(map); 
         
 };

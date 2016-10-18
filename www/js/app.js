@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-podmap = angular.module('starter', ['ionic', 'ngStorage'])
+podmap = angular.module('starter', ['ionic', 'firebase'])
 
 
 podmap.run(initializeIonic)
@@ -34,4 +34,9 @@ function initializeIonic($ionicPlatform,$ionicHistory,$ionicLoading) {
   });
 }
 
+
+podmap.factory("Items", function($firebaseArray) {
+   var itemsRef = new Firebase("https://items-36168.firebaseio.com/");
+    return $firebaseArray(itemsRef);
+   })
 
